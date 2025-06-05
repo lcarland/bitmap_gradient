@@ -10,14 +10,6 @@
 // generate default parameter file if not exists
 
 
-// gradient direction options
-typedef enum {
-    horizontal,
-    diagonal,
-    vertical,
-} gradient;
-
-
 void horizontalGradient(GradientParams p, FILE *file) {
     // rowSize reinitialized outside of object for equation usage
     int rowSize = p.rowSize;
@@ -228,7 +220,7 @@ int main(void) {
         .blueTarget = config.blueTarget,
     };
 
-    gradient direction = horizontal;
+    gradient direction = config.gradient_direction;
 
     makeBMP(params, colors, direction);
 }

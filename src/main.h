@@ -74,9 +74,16 @@ typedef struct {
     int rowSize;
 } GradientParams;
 
+// gradient direction options
+typedef enum {
+    horizontal,
+    diagonal,
+    vertical,
+} gradient;
+
 // configure bmp generator from file
 typedef struct {
-    char gradient_direction[11];
+    int gradient_direction;
     int height;
     int width;
     char fileName[32];

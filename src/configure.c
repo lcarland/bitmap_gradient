@@ -43,7 +43,21 @@ int configure(FILE *file, Configuration *config) {
         keyValParse(line, key, value);
 
         if (strcmp(key, "gradient_direction") == 0) {
-            strcpy(config->gradient_direction, value);
+            int direction;
+            if (strcmp(value, "horizontal") == 0) {
+                direction = horizontal;
+            }
+            else if (strcmp(value, "vertical") == 0) {
+                direction = vertical;
+            }
+            else if (strcmp(value, "diagonal") == 0) {
+                direction = diagonal;
+            }
+            else {
+                printf("Invalid gradient direction: %s\n", value);
+                return 1;
+            }
+            config->gradient_direction = (intptr_t) direction;
         }
         else if (strcmp(key, "fileName") == 0) {
             strcpy(config->fileName, value);
