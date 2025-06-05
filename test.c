@@ -3,11 +3,14 @@
 
 // testing spliting strings by delimiters
 
-int keyValParse(char* input, char delimeter, char *keyBuffer, char *valBuffer) {
+/*
+ Parses key value pairs by either = or :
+*/
+int keyValParse(char* input, char *keyBuffer, char *valBuffer) {
 
 	int delim_pos;
 	for (int i = 0; i < strlen(input); i++) {
-		if (input[i] == delimeter) {
+		if (input[i] == '=' || input[i] == ':') {
 			delim_pos = i;
 		}
 	}
@@ -25,8 +28,7 @@ int keyValParse(char* input, char delimeter, char *keyBuffer, char *valBuffer) {
 	return 0;
 }
 
-typedef struct
-{
+typedef struct {
 	char name[16];
 	char type[16];
 	char status[16];
@@ -50,7 +52,7 @@ int main(void) {
 	char value[24];
 	for (int i = 0; i < 3; i++) {	
 
-		keyValParse(list[i], '=', key, value);
+		keyValParse(list[i], key, value);
 
 		if (strcmp(key, "name") == 0) {
 			strcpy(_animal.name, value);
