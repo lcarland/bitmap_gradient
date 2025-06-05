@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
+#include <libconfig.h>
 
 #include "main.h"
 
@@ -167,7 +169,54 @@ int makeBMP(ImageFile p, ColorParams c, gradient direction) {
 }
 
 
+void default_config(FILE *file) {
+    char config[15][32] = {
+        "# image settings",
+        "gradient_direction=diagonal",
+        "height=512",
+        "width=512",
+        "fileName=output.bmp",
+        "",
+        "# Starting Color",
+        "redStart=255",
+        "greenStart=255",
+        "blueStart=0",
+        "",
+        "# Ending Color",
+        "redTarget=0",
+        "greenTarget=0",
+        "blueTarget=255"
+    };
+
+    for (int i = 0; i <= 14; i++) {
+        fprintf(file, "%s\n", config[i]);
+    }
+}
+
+
 int main(void) {
+
+    FILE *file = fopen("image.conf", "r");
+    if (!file) {
+        // insert file defaults, then close and reopen as readonly
+        file = fopen("image.conf", "w");
+        default_config(file);
+        fclose(file);
+        file = fopen("image.conf", "r");
+    };
+
+    char line[50];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        line[strcspn(line, "\n")] = 0;
+        if (strlen(line) == 0 || line[0] == '#') {
+            continue;
+        }
+        printf("%s\n", line);
+    }
+
+    fclose(file);
+
+
     ImageFile params = {
         .bpp = 24,
         .height = 1024,
