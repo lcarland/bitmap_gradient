@@ -19,7 +19,7 @@ typedef enum {
 
 
 void horizontalGradient(GradientParams p, FILE *file) {
-    // rowSize reinitiated outside of object for equation usage
+    // rowSize reinitialized outside of object for equation usage
     int rowSize = p.rowSize;
 
     for (int y = 0; y < p.height; y++) {
@@ -46,7 +46,7 @@ void horizontalGradient(GradientParams p, FILE *file) {
 
 
 void verticalGradient(GradientParams p, FILE *file) {
-    // rowSize reinitiated outside of object for equation usage
+    // rowSize reinitialized outside of object for equation usage
     int rowSize = p.rowSize;
 
     for (int y = 0; y < p.height; y++) {
@@ -70,7 +70,7 @@ void verticalGradient(GradientParams p, FILE *file) {
 
 
 void diagonalGradient(GradientParams p, FILE *file) {
-    // rowSize reinitiated outside of object for equation usage
+    // rowSize reinitialized outside of object for equation usage
     int rowSize = p.rowSize;
 
     // deltas halved
@@ -205,36 +205,30 @@ int main(void) {
         file = fopen("image.conf", "r");
     };
 
-    char line[50];
-    while (fgets(line, sizeof(line), file) != NULL) {
-        line[strcspn(line, "\n")] = 0;
-        if (strlen(line) == 0 || line[0] == '#') {
-            continue;
-        }
-        printf("%s\n", line);
-    }
+    Configuration config;
+    configure(file, &config);
 
     fclose(file);
 
 
     ImageFile params = {
         .bpp = 24,
-        .height = 1024,
-        .width = 512,
-        .fileName = "output.bmp",
+        .height = config.height,
+        .width = config.width,
+        .fileName = config.fileName,
     };
 
     ColorParams colors = {
-        .redStart = 255,
-        .greenStart = 0,
-        .blueStart = 0,
+        .redStart = config.redStart,
+        .greenStart = config.greenStart,
+        .blueStart = config.blueStart,
 
-        .redTarget = 120,
-        .greenTarget = 120,
-        .blueTarget = 160,
+        .redTarget = config.redTarget,
+        .greenTarget = config.greenTarget,
+        .blueTarget = config.blueTarget,
     };
 
-    gradient direction = diagonal;
+    gradient direction = horizontal;
 
     makeBMP(params, colors, direction);
 }

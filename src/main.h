@@ -74,4 +74,22 @@ typedef struct {
     int rowSize;
 } GradientParams;
 
+// configure bmp generator from file
+typedef struct {
+    char gradient_direction[11];
+    int height;
+    int width;
+    char fileName[32];
+    uint8_t redStart;
+    uint8_t greenStart;
+    uint8_t blueStart;
+    uint8_t redTarget;
+    uint8_t greenTarget;
+    uint8_t blueTarget;
+} Configuration;
+
+// Functions
+
+int configure(FILE *file, Configuration *config);
+
 #endif // MAIN_H
