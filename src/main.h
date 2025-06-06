@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 // BMP header structure.
 
@@ -97,6 +98,6 @@ typedef struct {
 
 // Functions
 
-int configure(FILE *file, Configuration *config);
+int configure(FILE *file, Configuration *config, int argc, char *argv[]);
 
 #endif // MAIN_H

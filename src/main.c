@@ -158,24 +158,26 @@ int makeBMP(ImageFile p, ColorParams c, gradient direction) {
     }
 
     fclose(file);
+
+    return 0;
 }
 
 
-void default_config(FILE *file) {
+void setDefaultConfig(FILE *file) {
     char config[15][32] = {
         "# image settings",
-        "gradient_direction=diagonal",
+        "gradient_direction=vertical",
         "height=512",
         "width=512",
         "fileName=output.bmp",
         "",
         "# Starting Color",
         "redStart=255",
-        "greenStart=255",
+        "greenStart=200",
         "blueStart=0",
         "",
         "# Ending Color",
-        "redTarget=0",
+        "redTarget=100",
         "greenTarget=0",
         "blueTarget=255"
     };
@@ -186,19 +188,26 @@ void default_config(FILE *file) {
 }
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
+    if (argc > 1) {
+        if (strcmp(argv[1], "config") == 0) {
+            FILE *file = fopen("image.conf", "w");
+            // insert file defaults, then close and exit.
+            setDefaultConfig(file);
+            fclose(file);
+            puts("image.conf set to default values");
+            return 0;
+        }
+    }
 
     FILE *file = fopen("image.conf", "r");
     if (!file) {
-        // insert file defaults, then close and reopen as readonly
-        file = fopen("image.conf", "w");
-        default_config(file);
-        fclose(file);
-        file = fopen("image.conf", "r");
+        puts("image.conf not detected, run config as an argument to create one");
+        return 0;
     };
 
     Configuration config;
-    configure(file, &config);
+    configure(file, &config, argc, argv);
 
     fclose(file);
 
