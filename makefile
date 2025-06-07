@@ -1,20 +1,16 @@
 HEADERS = main.h
-SRC_DIR := src
-OUT_DIR := biN
+SRC := src
+OUT := bin
+
+$(shell mkdir -p $(OUT))
 
 default: app
 
 app:
-	mkdir -p $(OUT_DIR)
-	gcc $(SRC_DIR)/main.c $(SRC_DIR)/configure.c -o $(OUT_DIR)/bmpgen
+	gcc $(SRC)/main.c $(SRC)/configure.c -o $(OUT)/bmpgen
 
 debug:
-        mkdir -p $(OUT_DIR)
-        gcc -g $(SRC_DIR)/main.c $(SRC_DIR)/configure.c -o $(OUT_DIR)/bmpgen
-
-test:
-	mkdir -p $(OUT_DIR)
-	gcc $(SRC_DIR)/test.c -o $(OUT_DIR)/test
+	gcc -g $(SRC)/main.c $(SRC)/configure.c -o $(OUT)/bmpgen
 
 clean:
 	-rm -f bin/*
