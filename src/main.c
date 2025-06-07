@@ -1,13 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <libconfig.h>
 
 #include "main.h"
-
-// improvements:
-// read from parameter file
-// generate default parameter file if not exists
 
 
 void horizontalGradient(GradientParams p, FILE *file) {
